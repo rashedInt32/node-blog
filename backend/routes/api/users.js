@@ -9,21 +9,23 @@ const router = express.Router();
  * @desc Register routes
  * @api public
  */
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
-  const isEmailAlreadyRegistered = User.find({email});
-  if (isEmailAlreadyRegistered)
-    return res.json({ msg: 'Email already used' });
+
+  await User.findOne({ email }, (err, user) => {
+    if (user !== null)
+      return res.json({ msg: 'Email already exist' });
+  });
 
   const user = new User({ name, email, password });
 
+  // Generates hash for password
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(user.password, salt, (err, hash) => {
       user.password = hash;
       user.save();
     })
   });
-  return res.json({ user });
 });
 
 export default router;

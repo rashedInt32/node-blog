@@ -11,11 +11,10 @@ const router = express.Router();
  */
 router.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
+  const result = await User.findOne({ email });
 
-  await User.findOne({ email }, (err, user) => {
-    if (user !== null)
-      return res.json({ msg: 'Email already exist' });
-  });
+  if (result !== null)
+    return res.json({ msg: 'Email already exist' });
 
   const user = new User({ name, email, password });
 
@@ -24,8 +23,28 @@ router.post('/register', async (req, res) => {
     bcrypt.hash(user.password, salt, (err, hash) => {
       user.password = hash;
       user.save();
-    })
+    });
   });
+
+  return res.json({ msg: 'User saved to db' });
+});
+
+/**
+ * @routes GET /api/user/login
+ * @desc Login routes
+ * @api public
+ */
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  const result = await User.findOne({ email });
+  if (result === null)
+    return res.json({ msg: 'Email Not found' });
+
+  const isMatch = bcrypt.compareSync(password, result.password);
+  if (!isMatch) return res.json({ msg: 'Password not match' });
+
+  return res.json({ msg: 'User saved to db' });
 });
 
 export default router;

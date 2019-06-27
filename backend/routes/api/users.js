@@ -1,6 +1,7 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { config } from '../../config';
 import User from '../../models/UserSchema';
 
 const router = express.Router();
@@ -21,9 +22,9 @@ router.post('/register', async (req, res) => {
 
   // Generates hash for password
   bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(user.password, salt, (err, hash) => {
+    bcrypt.hash(user.password, salt, async (err, hash) => {
       user.password = hash;
-      user.save();
+      await user.save();
     });
   });
 
@@ -44,9 +45,9 @@ router.post('/login', async (req, res) => {
 
   const isPasswordMatch = await bcrypt.compareSync(password, result.password);
   if (!isPasswordMatch)
-    return res.json({ msg: 'Password not match' });
+    return res.json({ msg: 'Password is wrong' });
 
-  let token = jwt.sign({ email }, 'secretkey', { expiresIn: '24h' });
+  let token = jwt.sign({ email }, config.secret , { expiresIn: '24h' });
   return res.json({
     success: true,
     message: 'Authentication successful!',

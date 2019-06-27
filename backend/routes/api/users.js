@@ -1,5 +1,6 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import User from '../../models/UserSchema';
 
 const router = express.Router();
@@ -41,10 +42,16 @@ router.post('/login', async (req, res) => {
   if (result === null)
     return res.json({ msg: 'Email Not found' });
 
-  const isMatch = bcrypt.compareSync(password, result.password);
-  if (!isMatch) return res.json({ msg: 'Password not match' });
+  const isPasswordMatch = await bcrypt.compareSync(password, result.password);
+  if (!isPasswordMatch)
+    return res.json({ msg: 'Password not match' });
 
-  return res.json({ msg: 'User saved to db' });
+  let token = jwt.sign({ email }, 'secretkey', { expiresIn: '24h' });
+  return res.json({
+    success: true,
+    message: 'Authentication successful!',
+    token
+  });
 });
 
 export default router;

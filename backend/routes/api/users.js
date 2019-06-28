@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { config } from '../../config';
 import User from '../../models/UserSchema';
+import verifyToken from '../../utils/verifyToken';
 
 const router = express.Router();
 
@@ -28,7 +29,8 @@ router.post('/register', async (req, res) => {
     });
   });
 
-  return res.json({ msg: 'User saved to db' });
+  return res.status(200).send({ message: 'Registration success' });
+
 });
 
 /**
@@ -48,10 +50,19 @@ router.post('/login', async (req, res) => {
     return res.json({ msg: 'Password is wrong' });
 
   let token = jwt.sign({ email }, config.secret , { expiresIn: '24h' });
-  return res.json({
-    success: true,
+  return res.status(200).send({
+    auth: true,
     message: 'Authentication successful!',
     token
+  });
+});
+
+router.get('/auth', verifyToken,  async (req, res) => {
+  await User.find({ email: req.email }, (err, user) => {
+    if (err) return res.status(500).send("There was a problem finding the user.");
+    if (!user) return res.status(404).send("No user found.");
+
+    res.status(200).send(user);
   });
 });
 

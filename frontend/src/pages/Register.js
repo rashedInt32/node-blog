@@ -12,6 +12,11 @@ const Register = () => {
     password: '',
   });
 
+  const [authError, setAuthError] = useState({
+    error: false,
+    msg: ''
+  });
+
   const onChangeInput = e => {
     console.log(e.target.name);
     const { name, value } = e.target;
@@ -20,16 +25,17 @@ const Register = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(authData);
-    const res = await axios.post(url, authData);
-    console.log(res);
-
+    const { data } = await axios.post(url, authData);
+    if (data.error) setAuthError({
+      error: true,
+      msg: data.msg
+    });
   };
 
 
   return (
-    <div>
-      <form action="#" onSubmit={onSubmit}>
+    <div className="row">
+      <form action="#" onSubmit={onSubmit} className="col-md-4 offset-md-4">
         <Input
           type="text"
           label="Name"
@@ -53,7 +59,10 @@ const Register = () => {
           name="password"
         />
 
-        <button >Register</button>
+        { authError.error ? <div class="alert alert-danger" role="alert">
+          {authError.msg}
+        </div> : '' }
+        <button className="btn btn-primary">Register</button>
       </form>
     </div>
   )

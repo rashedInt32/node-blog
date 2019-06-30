@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import db from '../db';
 import posts from '../routes/api/posts';
 import user from '../routes/api/users';
@@ -8,6 +9,8 @@ const dbUri = 'mongodb://localhost/playground';
 
 // Initialize express
 const app = express();
+
+app.use(cors());
 
 // Connectingto mongodb
 db.connect(dbUri, { useNewUrlParser: true });

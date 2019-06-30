@@ -30,7 +30,6 @@ router.post('/register', async (req, res) => {
   });
 
   return res.status(200).send({ message: 'Registration success' });
-
 });
 
 /**
@@ -57,10 +56,17 @@ router.post('/login', async (req, res) => {
   });
 });
 
+/**
+ * @routes GET /api/user/auth
+ * @desc auth routes
+ * @api private
+ */
 router.get('/auth', verifyToken,  async (req, res) => {
   await User.find({ email: req.email }, (err, user) => {
-    if (err) return res.status(500).send("There was a problem finding the user.");
-    if (!user) return res.status(404).send("No user found.");
+    if (err)
+      return res.status(500).send("There was a problem finding the user.");
+    if (!user)
+      return res.status(404).send("No user found.");
 
     res.status(200).send(user);
   });

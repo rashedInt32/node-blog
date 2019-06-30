@@ -9,7 +9,9 @@ const router = express.Router();
  * @api public
  */
 router.get('/', (req, res) => {
-  res.json({ msg: "hello from post routes" })
+  Post.find({}, (err, posts) => {
+    res.send(posts);
+  })
 });
 
 /**

@@ -13,8 +13,9 @@ const Register = () => {
   });
 
   const onChangeInput = e => {
-    console.log(e.target.value)
-    setAuthData({ [e.target.name]: e.target.value });
+    console.log(e.target.name);
+    const { name, value } = e.target;
+    setAuthData({ ...authData, [name]: value });
   }
 
   const onSubmit = async (e) => {

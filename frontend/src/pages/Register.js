@@ -5,7 +5,7 @@ import Input from '../components/forms/Input';
 
 const url = 'http://localhost:3900/api/user/register';
 
-const Register = () => {
+const Register = ({history}) => {
   const [authData, setAuthData] = useState({
     name: '',
     email: '',
@@ -18,7 +18,6 @@ const Register = () => {
   });
 
   const onChangeInput = e => {
-    console.log(e.target.name);
     const { name, value } = e.target;
     setAuthData({ ...authData, [name]: value });
   }
@@ -26,10 +25,12 @@ const Register = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     const { data } = await axios.post(url, authData);
-    if (data.error) setAuthError({
+    if (data.error) return setAuthError({
       error: true,
       msg: data.msg
     });
+
+    history.push('/login');
   };
 
 
@@ -59,7 +60,7 @@ const Register = () => {
           name="password"
         />
 
-        { authError.error ? <div class="alert alert-danger" role="alert">
+        { authError.error ? <div className="alert alert-danger" role="alert">
           {authError.msg}
         </div> : '' }
         <button className="btn btn-primary">Register</button>

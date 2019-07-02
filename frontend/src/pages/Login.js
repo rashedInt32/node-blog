@@ -10,14 +10,27 @@ const Login = () => {
     password: ''
   });
 
+  const [authError, setAuthError] = useState({
+    error: false,
+    msg: ''
+  });
+
   const onInputChange = (e) => {
     const { name, value } = e.target;
     setAuthData({ ...authData, [name]: value });
   };
 
-  const onSubmitForm = (e) => {
+  const onSubmitForm = async (e) => {
     e.preventDefault();
+    const {data} = await axios.post(url, authData);
 
+    if (data.error) return setAuthError({
+      error: true,
+      msg: data.msg
+    });
+
+    const user = JSON.parse(window.atob(data.token.split('.')[1]));
+    console.log(user);
   }
 
   return (
@@ -41,6 +54,9 @@ const Login = () => {
           onChange={onInputChange}
           name="password"
         />
+        { authError.error ? <div className="alert alert-danger" role="alert">
+          {authError.msg}
+        </div> : '' }
         <button className="btn btn-primary">Login</button>
       </form>
     </div>

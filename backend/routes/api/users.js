@@ -40,16 +40,17 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
-  const result = await User.findOne({ email });
-  if (result === null)
-    return res.json({ msg: 'Email Not found' });
+  const user = await User.findOne({ email });
+  if (user === null)
+    return res.send({error: true, msg: 'Email Not found' });
 
-  const isPasswordMatch = await bcrypt.compareSync(password, result.password);
+  const isPasswordMatch = await bcrypt.compareSync(password, user.password);
   if (!isPasswordMatch)
-    return res.json({ msg: 'Password is wrong' });
+    return res.send({ error: true, msg: 'Password is wrong' });
 
-  let token = jwt.sign({ email }, config.secret , { expiresIn: '24h' });
+  let token = jwt.sign({ user }, config.secret , { expiresIn: '24h' });
   return res.status(200).send({
+    error: false,
     auth: true,
     message: 'Authentication successful!',
     token

@@ -35,37 +35,44 @@ const Register = ({history}) => {
 
 
   return (
-    <div className="row">
-      <form action="#" onSubmit={onSubmit} className="col-md-4 offset-md-4">
-        <Input
-          type="text"
-          label="Name"
-          onChange={onChangeInput}
-          value={authData.name}
-          name="name"
-        />
+    <div className="container">
+      <div className="row">
+        <form action="#" onSubmit={onSubmit} className="col-md-4 offset-md-4 auth-form">
+          <div className="auth-card">
+            <h3>Register</h3>
+            <Input
+              type="text"
+              label="Name"
+              onChange={onChangeInput}
+              value={authData.name}
+              name="name"
+            />
 
-        <Input
-          type="email"
-          label="Email"
-          onChange={onChangeInput}
-          value={authData.email}
-          name="email"
-        />
-        <Input
-          type="password"
-          label="Password"
-          onChange={onChangeInput}
-          value={authData.password}
-          name="password"
-        />
+            <Input
+              type="email"
+              label="Email"
+              onChange={onChangeInput}
+              value={authData.email}
+              name="email"
+            />
+            <Input
+              type="password"
+              label="Password"
+              onChange={onChangeInput}
+              value={authData.password}
+              name="password"
+            />
 
-        { authError.error ? <div className="alert alert-danger" role="alert">
-          {authError.msg}
-        </div> : '' }
-        <button className="btn btn-primary">Register</button>
-      </form>
+            {authError.error ? <div className="alert alert-danger" role="alert">
+              {authError.msg}
+            </div> : ''}
+            <button className="btn btn-primary">Register</button>
+
+          </div>
+        </form>
+      </div>
     </div>
+
   )
 }
 

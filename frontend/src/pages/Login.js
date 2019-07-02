@@ -29,37 +29,44 @@ const Login = () => {
       msg: data.msg
     });
 
-    const user = JSON.parse(window.atob(data.token.split('.')[1]));
-    console.log(user);
+    const tokenDecode = JSON.parse(window.atob(data.token.split('.')[1]));
+    localStorage.setItem('app-token', data.token);
+    localStorage.setItem('user', JSON.stringify(tokenDecode.user));
   }
 
   return (
-    <div className="row">
-      <form
-        action="#"
-        className="col-md-4 offset-md-4"
-        onSubmit={onSubmitForm}
-      >
-        <Input
-          type="email"
-          label="Email"
-          value={authData.email}
-          onChange={onInputChange}
-          name="email"
-        />
-        <Input
-          type="password"
-          label="Password"
-          value={authData.password}
-          onChange={onInputChange}
-          name="password"
-        />
-        { authError.error ? <div className="alert alert-danger" role="alert">
-          {authError.msg}
-        </div> : '' }
-        <button className="btn btn-primary">Login</button>
-      </form>
+    <div className="container">
+      <div className="row">
+        <form
+          action="#"
+          className="col-md-4 offset-md-4 auth-form"
+          onSubmit={onSubmitForm}
+        >
+          <div className="auth-card">
+            <h3>Login</h3>
+            <Input
+              type="email"
+              label="Email"
+              value={authData.email}
+              onChange={onInputChange}
+              name="email"
+            />
+            <Input
+              type="password"
+              label="Password"
+              value={authData.password}
+              onChange={onInputChange}
+              name="password"
+            />
+            {authError.error ? <div className="alert alert-danger" role="alert">
+              {authError.msg}
+            </div> : ''}
+            <button className="btn btn-primary">Login</button>
+          </div>
+        </form>
+      </div>
     </div>
+
   )
 }
 

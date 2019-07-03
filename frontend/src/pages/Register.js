@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import Input from '../components/forms/Input';
@@ -67,6 +68,8 @@ const Register = ({history}) => {
               {authError.msg}
             </div> : ''}
             <button className="btn btn-primary">Register</button>
+
+            <p className="pt-3">Already have an account? <Link to="/login">Login</Link></p>
 
           </div>
         </form>

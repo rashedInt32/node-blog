@@ -8,8 +8,8 @@ const router = express.Router();
  * @desc get all posts
  * @api public
  */
-router.get('/', (req, res) => {
-  Post.find({}, (err, posts) => {
+router.get('/', async (req, res) => {
+  await Post.find({}, (err, posts) => {
     res.send(posts);
   })
 });

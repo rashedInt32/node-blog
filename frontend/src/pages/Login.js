@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import Input from '../components/forms/Input';
 
 const url = 'http://localhost:3900/api/user/login'
 
-const Login = () => {
+const Login = ({history}) => {
   const [authData, setAuthData] = useState({
     email: '',
     password: ''
@@ -32,6 +33,7 @@ const Login = () => {
     const tokenDecode = JSON.parse(window.atob(data.token.split('.')[1]));
     localStorage.setItem('app-token', data.token);
     localStorage.setItem('user', JSON.stringify(tokenDecode.user));
+    history.push('/posts');
   }
 
   return (
@@ -62,11 +64,11 @@ const Login = () => {
               {authError.msg}
             </div> : ''}
             <button className="btn btn-primary">Login</button>
+            <p className="pt-3">Don't have an account? <Link to="/register">Register</Link></p>
           </div>
         </form>
       </div>
     </div>
-
   )
 }
 

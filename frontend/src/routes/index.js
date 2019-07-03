@@ -6,8 +6,9 @@ import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Posts from '../pages/Posts';
 
-const Routes = () =>
+const Routes = (props) =>
   <Router>
+    {props.children}
     <Route path="/login" component={Login} />
     <Route path="/register" component={Register} />
     <PrivateRoute path="/posts" component={Posts} />

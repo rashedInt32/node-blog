@@ -15,11 +15,23 @@ router.get('/', async (req, res) => {
 });
 
 /**
+ * @route GET /api/posts
+ * @desc get all posts
+ * @api public
+ */
+router.get('/post/:id', async (req, res) => {
+  await Post.find({_id: req.params.id}, (err, post) => {
+    if (err) return res.status(403).send('Post not found');
+    res.send(post);
+  })
+});
+
+/**
  * @route POST /api/posts/post
  * @desc get all posts
  * @api public
  */
-router.post('/post', (req, res) => {
+router.post('/createpost', (req, res) => {
   const { title, author, text } = req.body;
   const post = new Post({
     title, author, text

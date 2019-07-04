@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const url = 'http://localhost:3900/api/posts/';
 
-const Posts = () => {
+const Posts = ({history}) => {
   const [ posts, setPosts ] = useState([])
 
   useEffect(() => {
@@ -12,10 +12,15 @@ const Posts = () => {
   }, []);
 
   const fetchPosts = async () => {
-    const result = await axios.get(url);
-    console.log(result);
-    return setPosts(result.data);
+    const {data} = await axios.get(url);
+    return setPosts(data);
   }
+
+  const getSinglePost = async (id) => {
+    const { data } = await axios.get(`http://localhost:3900/api/posts/post/${id}`)
+    const post = data[0];
+    history.push(`/post/${id}`, { post });
+  };
 
   return (
     <div className="container">
@@ -32,6 +37,8 @@ const Posts = () => {
                   state: { post }
                 }}
               >View Post</Link>
+
+              <p onClick={() => getSinglePost(post._id)}>View Post</p>
             </div>
           </div>)}
         </div>

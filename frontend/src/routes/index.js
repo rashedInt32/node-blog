@@ -7,6 +7,7 @@ import Header from '../components/header/Header';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Posts from '../pages/Posts';
+import SinglePost from '../pages/SinglePost';
 
 import { config } from '../config';
 const url = `${config.url}/user/logout`;
@@ -25,6 +26,12 @@ const Routes = ({history}) => {
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
       <PrivateRoute path="/posts" component={Posts} />
+      <Route
+        path="/post/:id"
+        render={({location}) =>
+          <SinglePost post={location.state.post} />
+        }
+       />
     </div>
   )
 }

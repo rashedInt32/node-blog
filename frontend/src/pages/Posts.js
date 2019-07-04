@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const url = 'http://localhost:3900/api/posts/';
 
@@ -25,6 +26,12 @@ const Posts = () => {
             <div className="card-body">
               <h5 className="card-title">{post.title}</h5>
               <p className="card-text">{post.text}</p>
+              <Link
+                to={{
+                  pathname: `/post/${post._id}`,
+                  state: { post }
+                }}
+              >View Post</Link>
             </div>
           </div>)}
         </div>

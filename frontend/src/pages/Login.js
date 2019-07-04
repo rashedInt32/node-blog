@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Input from '../components/forms/Input';
+import { config } from '../config';
 
-const url = 'http://localhost:3900/api/user/login'
+const url = `${config.url}/user/login`;
 
 const Login = ({history}) => {
   const [authData, setAuthData] = useState({

@@ -58,6 +58,15 @@ router.post('/login', async (req, res) => {
 });
 
 /**
+ * @routes GET /api/user/logout
+ * @desc auth routes
+ * @api private
+ */
+router.get('/logout', (req, res) => {
+  res.send({ auth: false, token: '' });
+});
+
+/**
  * @routes GET /api/user/auth
  * @desc auth routes
  * @api private

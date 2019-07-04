@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+import { config } from '../config';
 import Input from '../components/forms/Input';
 
-const url = 'http://localhost:3900/api/user/register';
+const url = `${config.url}/user/register`;
+
 
 const Register = ({history}) => {
   const [authData, setAuthData] = useState({

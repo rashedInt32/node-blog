@@ -12,7 +12,7 @@ import SinglePost from '../pages/SinglePost';
 import { config } from '../config';
 const url = `${config.url}/user/logout`;
 
-const Routes = ({history}) => {
+const Routes = ({history, location}) => {
   const handleLogOut = async () => {
     const { data } = await axios.get(url);
     localStorage.setItem('app-token', data.token);
@@ -22,7 +22,7 @@ const Routes = ({history}) => {
 
   return (
     <div>
-      <Header onLogout={handleLogOut} />
+      <Header onLogout={handleLogOut} pathname={location.pathname} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
       <PrivateRoute path="/posts" component={Posts} />

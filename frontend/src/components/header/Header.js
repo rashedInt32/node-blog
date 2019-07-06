@@ -11,7 +11,7 @@ const Header = (props) => {
   return (
     <nav className="navbar navbar-dark bg-dark">
       <div className="navbar-collapse" id="navbarNavDropdown">
-        <ul className="navbar-nav navbar-right">
+        <ul className="justify-content-end nav">
           <li className="nav-item">
             <Link
               className="nav-link"
@@ -19,10 +19,18 @@ const Header = (props) => {
               onClick={props.onLogout}
             >
               Log Out
-          </Link>
+            </Link>
           </li>
           {match
-            ? <li className="nav-item">Something</li>
+            ? <li className="nav-item">
+              <Link
+                className="nav-link"
+                to="/post/edit"
+                onClick={props.onLogout}
+              >
+                Edit post
+              </Link>
+            </li>
             : ''
           }
 

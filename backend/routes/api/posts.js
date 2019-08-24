@@ -20,10 +20,12 @@ router.get('/', async (req, res) => {
  * @api public
  */
 router.get('/post/:id', async (req, res) => {
-  await Post.find({_id: req.params.id}, (err, post) => {
+  const post = await Post.find({ _id: req.params.id }, (err, post) => {
     if (err) return res.status(403).send('Post not found');
-    res.send(post);
-  })
+    return post;
+  }).populate('author', 'name email -_id');
+
+  res.send(post);
 });
 
 /**

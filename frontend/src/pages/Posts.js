@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 
-const url = 'http://localhost:3900/api/posts/';
+import { config } from "../config";
+
+const url = `${config.url}/posts/`;
 
 const Posts = ({history}) => {
   const [ posts, setPosts ] = useState([])
@@ -38,14 +39,6 @@ const Posts = ({history}) => {
                     __html: post.text
                   }}
                 />
-                <Link
-                  to={{
-                    pathname: `/post/${post._id}`,
-                    state: { post }
-                  }}
-                >
-                  View Post
-                </Link>
 
                 <p onClick={() => getSinglePost(post._id)}>View Post</p>
               </div>

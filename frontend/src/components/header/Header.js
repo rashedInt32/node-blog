@@ -26,7 +26,7 @@ const Header = (props) => {
               <Link
                 className="nav-link"
                 to="/post/edit"
-                onClick={props.onLogout}
+                onClick={props.onEditPost}
               >
                 Edit post
               </Link>

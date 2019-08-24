@@ -27,6 +27,12 @@ const Register = ({history}) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    if (e.target.value === null) {
+      return setAuthError({
+        error: true,
+        msg: 'Please fill all the fileds'
+      })
+    }
     const { data } = await axios.post(url, authData);
     if (data.error) return setAuthError({
       error: true,

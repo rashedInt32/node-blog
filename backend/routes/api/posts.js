@@ -11,7 +11,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   await Post.find({}, (err, posts) => {
     res.send(posts);
-  })
+  });
 });
 
 /**
@@ -38,6 +38,7 @@ router.post('/createpost', (req, res) => {
   });
 
   post.save();
+  res.send(post);
 });
 
 /**

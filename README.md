@@ -1,5 +1,5 @@
 # node-blog
-Reflection of what i learned about NodeJs
+Reflection of what i learned about NodeJs, Frontend built with ReactJs
 
 ## Run local machine
     connect local or mlab mongo db
